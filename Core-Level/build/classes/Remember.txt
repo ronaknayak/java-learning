@@ -1,0 +1,431 @@
+
+ If subclass overrides any method by changing the return type, then return type should be sub-type of return type declared in super class.
+
+ While overriding method, the access level can't be more restrictive than Ovrriden method. i.e. we can increase the scope but can't decrease.
+
+ For normal import compiler give precedence in following order: explicit, current working directory,  implicit
+
+ For static import compiler give precedence in following order: current class static members, explicit, implicit
+ 
+ 
+ constructors:
+Default constructor is provided by the compiler IF AND ONLY IF the class does not define any constructor. It is
+immaterial if the super class provides a constructor or not
+
+super() is automatically added if the sub class constructor doesn't call any of
+the super class's constructor explicitly. the compiler automatically inserts super(); as 
+the first statement of the base class constructor
+
+Since the super class explicitly defines a constructor, compiler will not provide
+the default no-args constructor. Therefore, each of subclass's constructor must directly
+or indirectly call superclass's string argument constructor, otherwise it will not compile.
+
+To construct an instance of a sub class, its super class needs need to be constructed
+first. Since an instance can only be created via a constructor, some constructor of the
+super class has to be invoked.
+Either you explicitly call it or the compiler will add super() (i.e. no args
+constructor) as the first line of the sub class constructor
+
+Note that there is no compilation issue with b instanceof Flyer because Flyer is
+an interface (Though, there is no IS-A relation between b and Flyer)
+
+Arrays:
+In an array access, the expression to the left of the brackets appears to be fully
+evaluated before any part of the expression within the brackets is evaluated.
+In the expression a[(a=b)[3]], the expression a is fully evaluated before the
+expression (a=b)[3];
+
+Elements of Arrays of primitive types are initialized to their default value ( i.e. 0 for
+integral types, 0.0 for float/double and false for boolean)
+Elements of Arrays of non-primitive types are initialized to null.
+
+Note that an array of integers IS an Object :
+Object obj = new int[]{ 1, 2, 3 }; // is valid.
+But it is not an Array of objects.
+Object[] o = new int[10]; // is not valid.
+
+If the array reference expression produces null instead of a reference to an array, then
+a NullPointerException is thrown at runtime, but only after all parts of the array
+reference expression have been evaluated and only if these evaluations completed
+normally.
+In an array access, the expression to the left of the brackets appears to be fully
+evaluated before any part of the expression within the brackets is evaluated. Note that
+if evaluation of the expression to the left of the brackets completes abruptly, no part of
+the expression within the brackets will appear to have been evaluated.
+
+
+
+
+
+
+
+
+Exception:
+You can put a Super class in the throws clause and then you can
+throw any subclass exception.
+
+An overriding method only needs to declare that it can throw a subset of the
+exceptions the overridden method can throw. Having no throws clause in the
+overriding method is OK.
+
+NoClassDefFoundError is thrown by the JVM when it attempts to load a class
+and is unable to find the class file.
+Note that it extends java.lang.Error and Errors are always thrown by the
+JVM. A programmer should never throw an Error explicitly.
+
+Note: There is no hard and fast rule that says RuntimeExceptions (such as the ones
+mentioned in this questions) must not be thrown explicitly. It is ok to throw these
+exceptions explicitly in certain situations.
+
+But as there is a finally associated with the
+try/catch block, it is executed before anything is returned. Now, as finally has return
+7;, this value supersedes 3.
+
+Even if // 1 is enclosed in a try block, the method still has throws Exception
+in its declaration, which will force the caller of this method to either declare
+Exception in its throws clause or put the call within a try block.
+
+A subclass of Error cannot be caught using a catch block for Exception
+because java.lang.Error does not extend java.lang.Exception.
+
+Note that both the exceptions are RuntimeExceptions so there is no need to catch
+these. But it is ok even if the method declares them explicitly.
+
+JVM : ClassCastException, NullPointerException, SecurityException s "thrown implicitly"
+Application : IllegalStateException, IllegalArgumentException "thrown explicitly"
+Errors are always thrown only by the JVM.
+
+The Exception that is thrown in the last, is the Exception that is thrown by the
+method to the caller.
+
+You can apply a label to any code block or a block level statement (such as a
+for statement) but not to declarations. For example: loopX : int i = 10;
+
+A NullPointerException will be thrown if the expression given to the throw
+statement results in a null pointer.
+
+
+
+
+
+
+Basics:
+Package import does not use static keyword
+
+Syntax for normal importing is:
+import <package>.<classname>;
+import <package>.*;
+Syntax for importing static fields is: 
+import static <package>.<classname>.*; or 
+import static <package>.<classname>.<fieldname>;
+A class cannot be imported
+statically.
+
+You can apply all the modifiers to member variables except abstract, native and
+synchronized.
+For methods, you cannot apply transient and volatile.
+
+Importing com.* will not import the subpackage enthu. It will only import the classes
+in package com.
+
+A public class must exist in a file by the same name.
+A non public class may exist in any file. This implies that there can be only one
+public class in a file.
+
+Note that final means a method cannot be overridden. Although static methods
+can never be overridden. (they can be shadowed), making a static method final
+prevents the subclass from implementing the same static method.
+
+'this' reference is not available within a static method
+
+If there is no package statement in the source file, the class is assumed to be
+created in a default package that has no name.
+
+The order of initialization of a class is:
+1. All static constants, variables and blocks.(Among themselves the order is the order
+in which they appear in the code.)
+2. All non static constants, variables and blocks.(Among themselves the order is the
+order in which they appear in the code.)
+3. Constructor.
+
+Remember that you can never access a class that is defined in the default
+package (i.e. the package with no name) from a class in any other package.
+
+
+
+
+
+
+
+
+Overloaded Methods:
+
+you need to know the following rules:
+1. The compiler always tries to choose the most specific method available with least
+number of modifications to the arguments.
+2. Java designers have decided that old code should work exactly as it used to work
+before boxing-unboxing functionality became available.
+3. Widening is preferred to boxing/unboxing (because of rule 2), which in turn, is
+preferred over var-args.
+
+this( ... ) can only be called in a constructor and that too as a first statement.
+
+Whether a call needs to be wrapped in a try/catch or whether the enclosing method
+requires a throws clause depends on the class of the reference and not the class of the
+actual object.
+
+
+
+
+Inheritance:
+In case of overriding, the return type of the overriding method must match exactly to
+the return type of the overridden method if the return type is a primitive.
+(In case of objects, the return type of the overriding method may be a subclass of the
+return type of the overridden method.)
+
+Which variable will be used depends on the class that the variable is declared of.
+Which method will be used depends on the actual class of the object that is referenced
+by the variable
+
+To override a method in the subclass, the overriding method (i.e. the one in the
+subclass) MUST HAVE:
+.same name
+.same return type in case of primitives (a subclass is allowed for classes, this is also
+known as covariant return types).
+.same type and order of parameters
+.It may throw only those exceptions that are declared in the throws clause of the
+superclass's method or exceptions that are subclasses of the declared exceptions. It
+may also choose NOT to throw any exception.
+
+static method sM1() can be shadowed by a static method sM1() in the subclass.
+A a = new B();
+a.m1(); //will call A's static m1 method
+static method cannot be overridden by a non-static method and vice versa
+
+A class or interface type T will be initialized at its first active use, which occurs if:
+T is a class and a method actually declared in T (rather than inherited from a
+superclass) is invoked.
+T is a class and a constructor for class T is invoked, or U is an array with element
+type T, and an array of type U is created.
+A non-constant field declared in T (rather than inherited from a superclass or
+superinterface) is used or assigned. A constant field is one that is (explicitly or
+implicitly) both final and static, and that is initialized with the value of a compile-time
+constant expression . Java specifies that a reference to a constant field must be
+resolved at compile time to a copy of the compile-time constant value, so uses of such
+a field are never active uses.
+
+- A class or interface type T will be initialized immediately before
+the first occurrence of any one of the following:
+T is a class and an instance of T is created.
+T is a class and a static method declared by T is invoked.
+A static field declared by T is assigned.
+A static field declared by T is used and the field is not a constant variable.
+
+You cannot access c.i because i is private in B. But you can access ( (A)c).i
+because i is public in A. Remember that member variables are shadowed and not
+overridden. So, B's i shadows A's i and since B's i is private, you can't access A's i
+unless you cast the reference to A
+
+Although there is more to it that the following sequence, for the purpose of exam, this
+is all you need to know:
+1. Static blocks of the base class (only once, in the order they appear in the class).
+2. Static blocks of the class.
+3. Non-static blocks of the base class.
+4. Constructor of the base class.
+5. Non-static blocks of the class.
+6. Constructor of the class.
+7. Derived class's static or non-static blocks are not executed if that class is not being
+used.
+
+Access to static and instance fields and static methods depends on the class of
+reference variable and not the actual object to which the variable points to. Observe
+that this is opposite of what happens in the case of instance methods. In case of
+instance methods the method of the actual class of the object is called.
+
+you can unshadow it using a cast. For example, ((A) c).data; This will give you the
+data variable defined in A even if it is shadowed in B as well as in C. But, There is no way 
+to go more than one level up for methods
+
+Remember: Constructor must declare all the checked exceptions declared in the base
+constructor (or the super classes of the checked exceptions). They may add other
+exception
+
+
+
+
+
+String:
+String, StringBuilder, and StringBuffer - all are final classes.
+1. Remember that wrapper classes (java.lang.Boolean, java.lang.Integer,
+java.lang.Long, java.lang.Short etc.) are also final and so they cannot be
+extended.
+2. java.lang.Number, however, is not final. Integer, Long, Double etc. extend
+Number.
+3. java.lang.System is final as well.
+
+
+
+
+
+
+variables & Methods:
+Wrapper objects are always immutable. Therefore, when dataWrapper is passed
+into wiggler() method, it is never changed even when x++; is executed
+
+Not all short and byte values are valid char values, and neither are all char values 
+valid short values, therefore compiler complains.
+
+"class level" means static fields and they can be accessed from anywhere (i.e. static as
+well as non-static methods) in the class (and from outside the class depending on their
+accessibility).
+"instance level" means the instance fields and they can be accessed only from instance
+methods in the class.
+
+Theoretically, java supports Pass by Value for everything ( i.e. primitives as well as
+Objects).
+. Primitives are always passed by value.
+. Object "references" are passed by value. So it looks like the object is passed by
+reference but actually it is the value of the reference that is passed.
+Arrays are Objects (i.e. cA instanceof Object is true) so are effectively
+passed by reference.
+
+1. Within an instance method, you can access the current object of the same class using
+'this'. Therefore, when you access this.myValue, you are accessing the instance
+member myValue of the ChangeTest instance.
+2. If you declare a local variable (or a method parameter) with the same name as the
+instance field name, the local variable "shadows" the member field. Ideally, you
+should be able to access the member field in the method directly by using the name of
+the member (in this example, myValue). However, because of shadowing, when you
+use myValue, it refers to the local variable instead of the instance field.
+
+final Holder a = new Holder(5);
+'a' is final is true, but that only means that a will keep pointing to the same object
+for the entire life of the program. The object's internal fields, however, can
+change.
+
+
+
+
+Looping:
+The scope of a local variable declared in 'for' statement is the rest of the 'for'
+statement, including its own initializer.
+As such, the scope of i's declared in for() is just within the 'for' blocks.
+
+Remember that a labeled break or continue statement must always exist inside
+the loop where the label is declared
+
+A break statement with label Identifier attempts to transfer control to the enclosing
+labeled statement that has the same Identifier as its label; this statement, which is
+called the break target, then immediately completes normally. In this case, the break
+target need not be a while, do, for, or switch statement.
+
+A continue statement with label Identifier attempts to transfer control to the enclosing
+labelled statement that has the same Identifier as its label; that statement, which is
+called the continue target, then immediately ends the current iteration and begins a new
+one. The continue target must be a while, do, or for statement or a compile-time error
+occurs.
+
+The third part (i.e. the update part) of the for loop does not allow every kind of
+statement. It allows only the following statements here: Assignment,
+PreIncrementExpression, PreDecrementExpression, PostIncrementExpression,
+PostDecrementExpression, MethodInvocation, and
+ClassInstanceCreationExpression.
+
+
+
+
+
+
+
+operators:
+Integer i1 = 1;
+Integer i2 = new Integer(1);
+int i3 = 1;
+Byte b = 1;
+i1 == i2
+This will return false because both are pointing to different objects.
+i1 == i3
+This will return true because one operand is a primitive int, so the other will be
+unboxed and then the value will be compared.
+ i1.equals(i2)
+This will return true because both are Integer objects and both have the value 1.
+i1.equals(b)
+This will return false because they are pointing to objects of different types
+Further, The equals method of all wrapper classes first checks if the two object
+are of same class or not. If not, they immediately return false.
+
+the comparison of String objects in switch statements is case sensitive.
+
+Note that it is not permitted for either the second or the third operand expression of the
+? operator to be an invocation of a void method.
+If one of the operands is of type byte and the other is of type short, then the type of
+the conditional expression is short
+If one of the second and third operands is of the null type and the type of the other is
+a reference type, then the type of the conditional expression is that reference type.
+If the second and third operands are of different reference types, then it must be
+possible to convert one of the types to the other type. It is a
+compile-time error if neither type is assignment compatible with the other type.
+
+Compound assignment operators ( +=, *= etc) have strange ways
+A compound assignment expression of the form E1 op= E2 is equivalent to E1 = (T)
+((E1) op (E2)), where T is the type of E1
+
+CONSTANT values up to int can be assigned (without cast) to variables of lesser
+size ( for example, short to byte) if the value is representable by the variable.( that is,
+if it fits into the size of the variable).
+
+Implicit narrowing occurs only for byte, char, short, and int. Remember that it does not
+occur for long, float, or double. So, this will not compile: int i = 129L;
+
+instanceof operator does not accept objects as the right hand side operand.
+The operand at the right hand side should be a class. 
+
+
+
+
+
+
+
+
+public static void arraycopy(Object src,
+int srcPos,
+Object dest,
+int destPos,
+int length)
+
+IllegalArgumentException extends from RuntimeException. So you don't
+have to worry about it at least at compile time
+
+The enhanced for loop needs either an array or any object that implements
+Collection interface. Map does not implement Collection interface, though you
+can use Map.getKeySet() or Map.values() to get a Collection and then iterate
+over that Collection.
+
+There are 2 points to remember:
+1. replace() method creates a new String object.
+2. replace() method returns the same String object if both the parameters are same,
+i.e. if there is no change.
+
+When the program is run, the JVM looks for a method named main()
+If it does not found, it throws a java.lang.NoSuchMethodError.
+Note that java.lang.Error does not extend Exception class. It extends
+java.lang.Throwable and so it can be "thrown".
+
+new Object[]{ "aaa", new Object(), new ArrayList(), 10};
+10 is a primitive and not an Object but due to auto-boxing it will be converted
+into an Integer object and that object will then be stored into the array of
+Objects
+
+However, to save on memory, Java 'reuses' all the wrapper objects whose values fall
+in the following ranges:
+All Boolean values (true and false)
+All Byte values
+All Character values from \u0000 to \u007f (i.e. 0 to 127 in decimal)
+All Short and Integer values from -128 to 127
+So == will always return true when their primitive values are the same and belong to
+the above list of values.
+
+Game g = new Soccer();
+Soccer s = (Soccer) g;
+Soccer s = (Soccer) g; is a valid because g does refer to an object of class
+Soccer at run time. So there will be no exception at run time
